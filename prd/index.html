@@ -1,0 +1,689 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Liga Pareja · PRD</title>
+<meta name="description" content="Documento de producto de Liga Pareja: visión, problema, usuarios, alcance del MVP y decisiones.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;600&display=swap">
+<link rel="stylesheet" href="../design-system/tokens.css">
+<link rel="stylesheet" href="../design-system/bundle.css">
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; }
+.top { padding: var(--space-6) 0; background-image: radial-gradient(circle, rgba(255,255,255,.28) 1.5px, transparent 1.6px); background-size: var(--dot-pitch) var(--dot-pitch); }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 var(--space-4); }
+.top .kicker { font: 600 12px/16px var(--font-text); letter-spacing: .08em; text-transform: uppercase; margin: 0 0 var(--space-2); }
+.top h1 { font-size: clamp(36px, 8vw, 56px); line-height: .95; }
+.top nav { margin-top: var(--space-4); display: flex; gap: var(--space-4); flex-wrap: wrap; }
+.top nav a { color: var(--on-band); font: 600 12px/16px var(--font-text); letter-spacing: .08em; text-transform: uppercase; }
+.layout { display: grid; gap: var(--space-6); padding-top: var(--space-6); }
+@media (min-width: 960px) { .layout { grid-template-columns: 240px 1fr; } .toc { position: sticky; top: var(--space-4); align-self: start; max-height: calc(100vh - 32px); overflow: auto; } }
+.toc { font-size: 14px; line-height: 20px; }
+.toc > summary { cursor: pointer; }
+.toc > .toc-title { font: 600 12px/16px var(--font-text); letter-spacing: .08em; text-transform: uppercase; color: var(--brand); margin-bottom: var(--space-2); }
+.toc ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-2); }
+.toc ul ul { padding-left: var(--space-3); margin-top: var(--space-2); }
+.toc a { color: var(--ink-muted); text-decoration: none; }
+.toc a:hover { color: var(--brand); }
+@media (max-width: 959px) { .toc { border: 1px solid var(--line); border-radius: var(--radius-md); padding: var(--space-3) var(--space-4); } .toc ul { margin-top: var(--space-3); } }
+.doc { max-width: 760px; min-width: 0; }
+.doc h1 { display: none; }
+.doc h2 { font: 700 28px/32px var(--font-display); letter-spacing: .02em; text-transform: uppercase; color: var(--brand); margin: var(--space-10) 0 var(--space-3); scroll-margin-top: var(--space-4); }
+.doc h2:first-of-type { margin-top: 0; }
+.doc h3 { font: 600 18px/24px var(--font-text); letter-spacing: .06em; text-transform: uppercase; color: var(--brand); margin: var(--space-6) 0 var(--space-2); }
+.doc h4 { font: 600 17px/28px var(--font-text); margin: var(--space-4) 0 var(--space-1); }
+.doc p, .doc li { overflow-wrap: anywhere; }
+.doc a { color: var(--brand); }
+.doc table { border-collapse: collapse; width: 100%; font-size: 15px; line-height: 22px; display: block; overflow-x: auto; margin: var(--space-4) 0; }
+.doc th, .doc td { text-align: left; padding: var(--space-2) var(--space-3); border-bottom: 1px solid var(--line); vertical-align: top; min-width: 140px; }
+.doc th { font: 600 12px/16px var(--font-text); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-muted); }
+.doc blockquote { margin: var(--space-4) 0; padding: var(--space-3) var(--space-4); background: var(--brand-tint); border-radius: var(--radius-md); }
+.doc code { font-family: ui-monospace, Menlo, monospace; font-size: .85em; background: var(--surface-sunken); padding: 1px 5px; border-radius: 4px; }
+.doc hr { border: 0; border-top: 1px solid var(--line); margin: var(--space-10) 0; }
+footer { padding: var(--space-10) 0; font-size: 14px; color: var(--ink-muted); }
+</style>
+</head>
+<body>
+<header class="top lp-band"><div class="wrap">
+<p class="kicker">Liga Pareja · Documento de producto</p>
+<h1 class="lp-headline">PRD</h1>
+<p style="margin: var(--space-2) 0 0">Nivelación de pádel (consolidado)</p>
+<nav><a href="../">Landing</a><a href="../design-system/">Design system</a></nav>
+</div></header>
+<main class="wrap layout">
+<details class="toc" id="toc" open><summary class="toc-title">Contenido</summary><div class="toc">
+<ul>
+<li><a href="#nivelacion-de-padel">Nivelación de pádel</a></li>
+<li><a href="#nivelacion-de-padel-capa-estrategica">Nivelación de pádel — capa estratégica</a></li>
+<li><a href="#archivos">Archivos</a></li>
+<li><a href="#historial">Historial</a></li>
+<li><a href="#veredicto">Veredicto</a></li>
+<li><a href="#vision">Visión</a></li>
+<li><a href="#problema">Problema</a></li>
+<li><a href="#usuarios">Usuarios</a></li>
+<li><a href="#alcance">Alcance</a></li>
+<li><a href="#competidores">Competidores</a></li>
+<li><a href="#ligas-para-organizadores-la-promesa-es-partidos-parejos-y-el-primer-cliente-es-el-organizador">Ligas para organizadores: la promesa es partidos parejos y el primer cliente es el organizador</a></li>
+<li><a href="#la-landing-del-desafio-es-el-formulario-de-inscripcion-a-la-liga">La landing del desafío es el formulario de inscripción a la liga</a></li>
+<li><a href="#stack-del-mvp-de-liga-planilla-apps-script-y-paginas-simples-con-link-personal-por-jugador">Stack del MVP de liga: planilla, Apps Script y páginas simples, con link personal por jugador</a></li>
+<li><a href="#los-leads-de-la-landing-se-guardan-en-una-google-sheet-via-google-apps-script">Los leads de la landing se guardan en una Google Sheet, vía Google Apps Script</a></li>
+<li><a href="#oportunidades-sin-decidir">Oportunidades sin decidir</a></li>
+<li><a href="#preguntas-abiertas">Preguntas abiertas</a></li>
+<li><a href="#glosario">Glosario</a></li>
+<li><a href="#benchmark-nivelacion-de-padel">Benchmark — Nivelación de pádel</a></li>
+<li><a href="#como-se-resuelve-hoy">Cómo se resuelve hoy</a></li>
+<li><a href="#competidores_1">Competidores</a></li>
+<li><a href="#lectura">Lectura</a></li>
+<li><a href="#fuentes">Fuentes</a></li>
+<li><a href="#arquitectura-tecnica-base-de-datos-y-stack-del-mvp">Arquitectura técnica, base de datos y stack del MVP</a></li>
+<li><a href="#restricciones-confirmadas-por-emilia">Restricciones (confirmadas por Emilia)</a></li>
+<li><a href="#decision-los-leads-se-guardan-en-una-google-sheet-via-google-apps-script">Decisión: los leads se guardan en una Google Sheet, vía Google Apps Script</a></li>
+<li><a href="#arquitectura">Arquitectura</a></li>
+<li><a href="#base-de-datos-hoja-leads">Base de datos: hoja "Leads"</a></li>
+<li><a href="#stack">Stack</a></li>
+<li><a href="#si-sigue-el-negocio-el-bot-no-entra-en-el-curso">Si sigue el negocio: el bot (no entra en el curso)</a></li>
+<li><a href="#proximos-pasos-verificables">Próximos pasos verificables</a></li>
+<li><a href="#fuentes_1">Fuentes</a></li>
+<li><a href="#camino-del-mvp-landing-grupo-de-validacion-bot-de-whatsapp">Camino del MVP: landing, grupo de validación, bot de WhatsApp</a></li>
+<li><a href="#experiencia-de-coordinar-un-partido-con-el-bot-y-como-correrla-a-mano">Experiencia de coordinar un partido con el bot (y cómo correrla a mano)</a></li>
+<li><a href="#principios">Principios</a></li>
+<li><a href="#antes-del-partido">Antes del partido</a></li>
+<li><a href="#despues-del-partido">Después del partido</a></li>
+<li><a href="#donde-puede-fallar">Dónde puede fallar</a></li>
+<li><a href="#como-correrlo-a-mano-en-la-etapa-1">Cómo correrlo a mano en la etapa 1</a></li>
+</ul>
+</div>
+</details>
+<article class="doc"><h1 id="prd-nivelacion-de-padel-consolidado">PRD · Nivelación de pádel (consolidado)</h1>
+<p>Actualizado el 2026-10-16 con las revisiones de los skills de CPO y CTO. Los archivos fuente están en prd/; las revisiones, en revision/; la evidencia, en evidencia/.</p>
+<hr />
+<!-- fuente: prd/README.md -->
+
+<h2 id="nivelacion-de-padel">Nivelación de pádel</h2>
+<p>Herramienta para que los organizadores de ligas y torneos amateurs de pádel armen fixture, tabla y resultados sin Excel, con resultados confirmados por las dos parejas, para que las categorías reflejen el nivel real y los partidos salgan parejos.</p>
+<p>Cliente: organizadores de ligas y torneos amateurs de La Plata. Usuarios: las parejas de octava a cuarta que juegan esas ligas y hoy se anotan en una categoría autopercibida que no siempre es la real.</p>
+<hr />
+<!-- fuente: prd/context/README.md -->
+
+<h2 id="nivelacion-de-padel-capa-estrategica">Nivelación de pádel — capa estratégica</h2>
+<p>Partidos parejos en las ligas amateurs de pádel: el organizador gestiona la liga sin Excel, las dos parejas confirman cada resultado y, con esos resultados, la categoría de cada jugador refleja su nivel real. Arranca en La Plata.</p>
+<h2 id="archivos">Archivos</h2>
+<ol>
+<li>Visión</li>
+<li>Problema</li>
+<li>Usuarios</li>
+<li>Alcance</li>
+<li>Competidores</li>
+<li>Oportunidades sin decidir</li>
+<li>Preguntas abiertas</li>
+<li>Glosario</li>
+</ol>
+<h2 id="historial">Historial</h2>
+<ul>
+<li>2026-10-08: primera versión, "completo con reservas". Producto centrado en un bot de WhatsApp que arma partidos entre parejas desconocidas.</li>
+<li>2026-10-16: revisión con el skill de CPO. Cambian la promesa (partidos parejos en lugar de un nivel confiable), el cliente (organizadores de ligas), el MVP (herramienta de ligas) y la landing (inscripción a la liga). Se suma evidencia de primera mano. Detalle en <code>revision/2026-10-16-vision-cpo.md</code> y <code>revision/2026-10-16-prd-cpo.md</code>.</li>
+</ul>
+<h2 id="veredicto">Veredicto</h2>
+<p><strong>Completo.</strong> Alcanza para avanzar con la landing de inscripción y con la revisión técnica del MVP de liga. Arquitectura vigente: arquitectura del MVP, a revisar con el skill de CTO para el nuevo alcance.</p>
+<hr />
+<!-- fuente: prd/context/vision.md -->
+
+<h2 id="vision">Visión</h2>
+<p>Marcas: 📌 dicho por Emilia o con fuente · 🔍 inferencia · ❓ pendiente.</p>
+<p><strong>Promesa:</strong> 📌 partidos parejos. El nivel es un medio, no la promesa: si resulta ser una mala forma de lograrlo, la visión sigue en pie.</p>
+<p><strong>Sistema terminado:</strong> las ligas y torneos amateurs de pádel se organizan en la herramienta. El organizador inscribe a las parejas, el fixture y la tabla se arman solos y cada resultado lo carga una pareja y lo confirma la otra. Con esos resultados verificados, la categoría de cada jugador se ajusta sola, que es lo que hoy hacen los fiscales de los torneos formales a mano y recién al final. Con ese nivel ya confiable, más adelante se arman partidos parejos también fuera de las ligas.</p>
+<p><strong>Cómo se llega</strong>, por etapas (decisión del 2026-10-16):</p>
+<ol>
+<li><strong>Landing de inscripción:</strong> formulario para anotarse en la liga. Es el MVP del desafío del curso.</li>
+<li><strong>Liga piloto:</strong> una liga completa (8 fechas más playoff) sin Excel, con la liga de los martes de sexta.</li>
+<li><strong>Cinco ligas o torneos</strong> distintos usándolo en sus primeras vueltas, sin que Emilia esté encima.</li>
+<li><strong>Informe de categoría automático:</strong> ascender, confirmar o bajar jugadores con los resultados confirmados.</li>
+<li><strong>Nivel portable</strong> y partidos parejos fuera de las ligas.</li>
+</ol>
+<p><strong>Horizonte</strong> (no es la visión de hoy): un nivel amateur que cualquier club, torneo o entrenador reconozca.</p>
+<hr />
+<!-- fuente: prd/context/problem.md -->
+
+<h2 id="problema">Problema</h2>
+<p>Marcas: 📌 dicho por Emilia o con fuente · 🔍 inferencia · ❓ pendiente.</p>
+<p><strong>Qué problema resuelve:</strong> las categorías de pádel son autopercibidas. En las ligas y torneos amateurs, cada pareja se anota en la categoría que cree tener, nadie la valida y los partidos salen desparejos.</p>
+<p><strong>Para quién:</strong>
+- <strong>Jugadores:</strong> parejas de octava a cuarta que juegan ligas y torneos y se cruzan con rivales que no conocen.
+- <strong>Organizadores:</strong> arman la tabla y el fixture en Excel, los mandan como foto al grupo de WhatsApp y juntan los resultados a mano, sin poder verificarlos.</p>
+<p><strong>Qué pasa si no se resuelve:</strong>
+- 📌 La pareja superior siente que perdió el turno y se aburre. Un turno cuesta unos 40.000 pesos y se divide entre cuatro jugadores.
+- 📌 Los jugadores cambian de comportamiento para evitarlo: abren círculos nuevos y se anotan en otros torneos.
+- 📌 La corrección existe pero llega tarde: solo en torneos formales hay fiscales, que al final emiten un informe que asciende, confirma, baja o expulsa jugadores.
+- ❓ No sabemos qué siente la pareja inferior.</p>
+<p><strong>Evidencia:</strong>
+- 📌 Liga semanal de sexta organizada por WhatsApp (capturas del 2026-10-16, en <code>evidencia/</code>): 8 parejas, 8 fechas los martes y playoff 1º contra 8º. La tabla y el fixture se arman en Excel y se mandan como foto. Cada pareja reporta su resultado por texto y nadie lo verifica. En la misma sexta, la pareja que va primera lleva +24 en games y la última −25.
+- 📌 Testimonio de un jugador que jugó esa liga varias veces: "Nadie confirma nada, todos más o menos se autoperciben la categoría". Vio rivales mejores y peores que la categoría anotada.
+- 📌 Dos casos anteriores de amigos de Emilia, con rivales conseguidos por un entrenador y por WhatsApp: los dos partidos salieron desparejos.
+- 📌 Para Emilia, conseguir rival cuesta, pero lo más difícil es que sea del mismo nivel.</p>
+<p><strong>Por qué ahora:</strong> 📌 el pádel es tendencia en Argentina y se espera que siga creciendo. 🔍 Más jugadores nuevos implica más ligas y más partidos entre gente que no se conoce. ❓ Falta un dato que respalde el crecimiento.</p>
+<p><strong>Cómo sabremos si funcionó</strong> (decisión del 2026-10-16), en dos escalones:
+1. Una liga completa (8 fechas más playoff) jugada sin Excel: fixture, resultados y tabla salen de la herramienta.
+2. Cinco ligas o torneos distintos usándola en sus primeras vueltas.</p>
+<p>🔍 Métrica temprana: porcentaje de resultados confirmados por la pareja rival dentro de las 24 horas.</p>
+<hr />
+<!-- fuente: prd/context/users.md -->
+
+<h2 id="usuarios">Usuarios</h2>
+<p>Marcas: 📌 dicho por Emilia o con fuente · 🔍 inferencia · ❓ pendiente.</p>
+<p><strong>Cliente (puerta de entrada):</strong> 📌 organizadores de ligas y torneos amateurs de La Plata. Son los que más trabajo operativo cargan y ya juntan los resultados de cada partido, que es el dato necesario para calcular el nivel.</p>
+<p><strong>Persona concreta:</strong> 📌 el organizador de la liga semanal de los martes de sexta, la liga de las capturas. Es la liga piloto.</p>
+<p><strong>Usuarios:</strong> parejas de pádel con categoría, de octava a cuarta, que juegan esas ligas. Son los que tienen el dolor de los partidos desparejos y los que cargan y confirman resultados.</p>
+<p><strong>Qué usan hoy en lugar del producto:</strong>
+- 📌 Organizadores: Excel, fotos de la pantalla y un grupo de WhatsApp.
+- 📌 Jugadores: grupos de WhatsApp, el club, recomendaciones del entrenador y ligas o torneos. La categoría es la que cada uno declara.</p>
+<p><strong>Quién paga:</strong>
+- 📌 En la etapa de cinco ligas, nadie: es gratis para validar.
+- 🔍 Después, hipótesis a probar: el organizador por liga o el jugador en la inscripción.
+- 🔍 Más adelante: clubes (horarios muertos), entrenadores y marcas.</p>
+<hr />
+<!-- fuente: prd/context/scope.md -->
+
+<h2 id="alcance">Alcance</h2>
+<p>Marcas: 📌 dicho por Emilia o con fuente · 🔍 inferencia · ❓ pendiente.</p>
+<p><strong>Qué entra en la primera versión</strong> (decisión del 2026-10-16):
+1. <strong>Landing de inscripción a la liga:</strong> formulario con pareja, nombres, WhatsApp, email, categoría declarada, liga, fuente y consentimiento. Es el entregable del desafío del curso.
+2. <strong>MVP de liga:</strong> los jugadores cargan el resultado de cada partido, 📌 el resultado cuenta solo cuando la pareja rival lo confirma, la tabla se actualiza sola y el fixture (con playoff) se arma automáticamente.</p>
+<p><strong>Zona:</strong> 📌 La Plata.</p>
+<p><strong>A quién NO le vende:</strong>
+- 📌 <strong>Principiantes:</strong> todavía no tienen categoría. Se reconsidera si aparecen pidiendo nivel para empezar a competir.
+- 📌 <strong>Federados:</strong> ya tienen ranking. Se reconsidera si el producto llega a torneos federados.</p>
+<p><strong>Qué NO hace (por ahora):</strong>
+- Informe de categoría (ascender, confirmar o bajar). Vuelve cuando haya una liga completa con resultados confirmados.
+- Armar partidos entre parejas que no están en una liga. Vuelve con el nivel portable.
+- Bot de WhatsApp. Pasa a oportunidades.
+- Reservar canchas ni ser turnero. Se reconsidera si los clubes lo piden.
+- Validación de nivel por entrenadores.
+- Calcular el nivel con un algoritmo complejo.</p>
+<p>🔍 Si hay que recortar el MVP, el fixture es lo primero que puede seguir a mano (se arma una vez por liga). Resultados confirmados y tabla son el corazón.</p>
+<p><strong>Supuestos y qué los invalidaría:</strong>
+- Los jugadores cargan y confirman resultados sin que nadie los persiga → se invalida si en la liga piloto menos de la mitad de los resultados se confirma dentro de las 24 horas (❓ umbral a confirmar).
+- El organizador deja el Excel → se invalida si vuelve a mandar la foto de la tabla.
+- Los rivales confirman con honestidad → se invalida si aparecen resultados en disputa frecuentes o confirmaciones entre amigos que no reflejan el partido.</p>
+<hr />
+<!-- fuente: prd/context/competitors.md -->
+
+<h2 id="competidores">Competidores</h2>
+<p>Marcas: 📌 dicho por Emilia o con fuente · 🔍 inferencia · ❓ pendiente.</p>
+<table>
+<thead>
+<tr>
+<th>Competidor</th>
+<th>Qué hace</th>
+<th>Diferencia</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Excel + foto + grupo de WhatsApp</strong></td>
+<td>📌 Cómo organizan hoy las ligas: gratis y conocido</td>
+<td>Competidor directo. Hay que ser más fácil que esto para el organizador</td>
+</tr>
+<tr>
+<td><strong>Torneos formales con fiscales</strong></td>
+<td>📌 Corrigen categorías al final del torneo, a mano</td>
+<td>La herramienta hace lo mismo con cada resultado, no al final</td>
+</tr>
+<tr>
+<td><strong>Playtomic</strong></td>
+<td>📌 Reservas, partidos abiertos y nivel de 0 a 7 calculado con resultados. Pocos clubes en Argentina</td>
+<td>Riesgo de largo plazo si gana clubes</td>
+</tr>
+<tr>
+<td><strong>ATC – Alquilá Tu Cancha</strong></td>
+<td>📌 Líder local en reservas, sin niveles; matchmaking como plan futuro</td>
+<td>Riesgo más grande si lanza ligas o nivel</td>
+</tr>
+</tbody>
+</table>
+<p>| <strong>Apps gratis de ligas (Competize, MatchBall)</strong> | 📌 Arman fixture, tabla y resultados; Competize incluye pádel. Sus fichas no mencionan confirmación del rival ni ajuste de categoría | Fixture y tabla no diferencian. El diferencial es la confirmación entre parejas y el informe de categoría |</p>
+<p>📌 Según el organizador consultado por Emilia (2026-10-16), los organizadores siguen con Excel porque no conocen estas herramientas. 🔍 La llegada directa al organizador es una ventaja que hay que aprovechar antes de que las descubra.</p>
+<p>Detalle de Playtomic y ATC en el benchmark del 2026-10-08.</p>
+<hr />
+<!-- fuente: prd/decisions/2026-10-16-ligas-para-organizadores.md -->
+
+<h2 id="ligas-para-organizadores-la-promesa-es-partidos-parejos-y-el-primer-cliente-es-el-organizador">Ligas para organizadores: la promesa es partidos parejos y el primer cliente es el organizador</h2>
+<p><strong>Qué:</strong>
+- La promesa del producto es <strong>partidos parejos</strong>; el nivel es un medio.
+- El <strong>primer cliente es el organizador de ligas y torneos amateurs</strong>. Los jugadores son los usuarios; los clubes quedan para más adelante.
+- El <strong>MVP es una herramienta de ligas</strong>: los jugadores cargan los resultados, cada resultado cuenta solo cuando la pareja rival lo confirma, y la tabla y el fixture (con playoff) se arman solos. El informe de categoría queda para después.
+- Etapas: landing de inscripción → liga piloto (la liga de los martes de sexta) → cinco ligas o torneos → informe de categoría automático → nivel portable.
+- Éxito: una liga completa sin Excel; después, cinco ligas o torneos distintos.
+- Gratis durante la etapa de cinco ligas. Zona: La Plata. El bot de WhatsApp pasa a oportunidades.</p>
+<p><strong>Por qué:</strong> la evidencia de la liga semanal muestra que el organizador hace todo a mano (Excel, fotos, resultados por WhatsApp sin verificar) y ya concentra los resultados que hacen falta para calcular un nivel. Sacarle ese trabajo es la puerta de entrada; a cambio, el producto obtiene resultados verificados. Arrancar con una liga antes que con cinco evita multiplicar el soporte si algo falla.</p>
+<p><strong>Qué la invalidaría:</strong> que los organizadores no sientan el trabajo manual como un problema o no dejen el Excel; que los jugadores no confirmen resultados; o que ATC o Playtomic lancen ligas con nivel en La Plata antes.</p>
+<hr />
+<!-- fuente: prd/decisions/2026-10-16-landing-de-inscripcion.md -->
+
+<h2 id="la-landing-del-desafio-es-el-formulario-de-inscripcion-a-la-liga">La landing del desafío es el formulario de inscripción a la liga</h2>
+<p><strong>Qué:</strong> la landing explica el problema y la solución y tiene un formulario para que las parejas se anoten en la liga (nombres, WhatsApp, email, categoría declarada, liga, fuente y consentimiento). La carga de resultados es el primer paso de la app, después.</p>
+<p><strong>Por qué:</strong> cumple el desafío del curso (landing con formulario de leads), le saca al organizador el armado manual de la lista de parejas, deja registrada la categoría declarada para compararla después con los resultados y cada inscripto es un lead real de jugador. La carga de resultados pide que el jugador vuelva cada semana, así que se prueba con una liga ya armada.</p>
+<p><strong>Qué la invalidaría:</strong> que el organizador de la liga piloto prefiera seguir anotando parejas por WhatsApp.</p>
+<hr />
+<!-- fuente: prd/decisions/2026-10-16-stack-mvp-liga.md -->
+
+<h2 id="stack-del-mvp-de-liga-planilla-apps-script-y-paginas-simples-con-link-personal-por-jugador">Stack del MVP de liga: planilla, Apps Script y páginas simples, con link personal por jugador</h2>
+<p><strong>Qué:</strong> la landing de inscripción y el MVP de liga usan HTML, CSS y JS simples publicados en Vercel (📌 cambio del 2026-10-16; antes GitHub Pages), con Google Apps Script y una Google Sheet privada (hojas Ligas, Inscripciones, Jugadores, Partidos y Tabla). Cada jugador entra con un link personal que recibe por WhatsApp, sin contraseña. Cada partido pasa por agendado, en juego, cargado, confirmado, en disputa o cancelado; si el rival no confirma, decide el organizador. 📌 Si una pareja no se presenta, el partido queda cancelado y la pareja que se presentó suma los puntos (decisión del 2026-10-16). Los avisos al rival son mensajes de WhatsApp ya escritos que manda el jugador, sin API. El fixture arma 7 fechas de todos contra todos más una fecha libre, y después el playoff.</p>
+<p><strong>Por qué:</strong> Ema no programa y tiene que poder abrir la planilla y entender qué pasó; cinco ligas no se acercan a los límites de Apps Script; costo cero. Los organizadores siguen con Excel porque no conocen las herramientas existentes, así que fixture y tabla no diferencian: el diferencial es la confirmación entre parejas y, después, el informe de categoría.</p>
+<p><strong>Descartadas:</strong> Supabase (complejidad y pausa por inactividad del plan gratis; se reconsidera con el informe de categoría), cuentas con contraseña (fricción), API de WhatsApp (cobra cada mensaje desde el 01-10-2026) y usar una app existente como producto (no tiene el diferencial).</p>
+<p><strong>Deuda declarada:</strong> el link personal funciona como identidad, la planilla funciona como base de datos y la dirección del script es pública. Detalle y mitigaciones en <code>revision/2026-10-16-prd-cto.md</code>.</p>
+<p><strong>Qué la invalidaría:</strong> pasar de cinco ligas, construir el informe de categoría o que aparezcan cargas falsas con links compartidos.</p>
+<hr />
+<!-- fuente: prd/decisions/2026-10-08-leads-en-google-sheet.md -->
+
+<h2 id="los-leads-de-la-landing-se-guardan-en-una-google-sheet-via-google-apps-script">Los leads de la landing se guardan en una Google Sheet, vía Google Apps Script</h2>
+<p><strong>Qué:</strong> la landing envía el formulario a un Google Apps Script que agrega cada registro a una Google Sheet privada. La landing se aloja en GitHub Pages. Costo total: cero.</p>
+<p><strong>Por qué:</strong> para el curso se construye solo la landing; la planilla es lo más simple de armar y mantener sin saber programar, y Emilia ya trabaja en planillas. Supabase quedó descartada para esta etapa porque suma complejidad y una pausa por inactividad que no se justifican para una landing.</p>
+<p><strong>Qué la invalidaría:</strong> construir el bot de WhatsApp (los datos pasan a una base real), o que el volumen de registros o el spam superen lo que la planilla y las cuotas de Apps Script soportan.</p>
+<hr />
+<!-- fuente: prd/context/opportunities.md -->
+
+<h2 id="oportunidades-sin-decidir">Oportunidades sin decidir</h2>
+<p>Marcas: 📌 dicho por Emilia o con fuente · 🔍 inferencia · ❓ pendiente.</p>
+<ul>
+<li>Bot de WhatsApp para cargar resultados y coordinar partidos (salió de la visión el 2026-10-16).</li>
+<li>Armar partidos parejos entre parejas que no están en una liga, con el nivel ya confiable.</li>
+<li>Turnero de canchas para clubes.</li>
+<li>Clubes que pagan por llenar horarios muertos.</li>
+<li>Entrenadores que captan alumnos por nivel.</li>
+<li>Expansión a otras ciudades después de La Plata.</li>
+</ul>
+<hr />
+<!-- fuente: prd/context/open-questions.md -->
+
+<h2 id="preguntas-abiertas">Preguntas abiertas</h2>
+<p>Marcas: 📌 dicho por Emilia o con fuente · 🔍 inferencia · ❓ pendiente.</p>
+<table>
+<thead>
+<tr>
+<th>Pregunta</th>
+<th>Quién la cierra</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>¿Quién paga después de la etapa gratuita, y cuánto?</td>
+<td>Emilia, con los organizadores de la etapa de cinco ligas</td>
+</tr>
+<tr>
+<td>¿Cuántas ligas y torneos amateurs hay en La Plata?</td>
+<td>Emilia, investigación</td>
+</tr>
+<tr>
+<td>¿En qué posición va la fecha libre de la liga?</td>
+<td>Emilia, con el organizador</td>
+</tr>
+<tr>
+<td>¿Los jugadores confirman resultados sin que nadie los persiga? Umbral de la liga piloto</td>
+<td>Emilia, en la liga piloto</td>
+</tr>
+<tr>
+<td>¿La pareja inferior también vive el partido desparejo como un problema?</td>
+<td>Emilia, en la liga piloto</td>
+</tr>
+<tr>
+<td>¿ATC o Playtomic planean ligas o nivel en Argentina?</td>
+<td>Emilia, investigación</td>
+</tr>
+<tr>
+<td>¿Dato de crecimiento del pádel en Argentina?</td>
+<td>Investigación de mercado</td>
+</tr>
+</tbody>
+</table>
+<p>Cerradas el 2026-10-16: qué herramientas usan los organizadores (Excel, porque no conocen otras), la señal de éxito (definida en dos escalones), si los clubes pagarían (pasa a más adelante) y qué permite WhatsApp para un bot (el bot sale del MVP).</p>
+<hr />
+<!-- fuente: prd/context/glossary.md -->
+
+<h2 id="glosario">Glosario</h2>
+<p>Marcas: 📌 dicho por Emilia o con fuente · 🔍 inferencia · ❓ pendiente.</p>
+<ul>
+<li><strong>Categoría:</strong> nivel de juego en el pádel argentino, de primera (la más alta) a octava.</li>
+<li><strong>Nivel autopercibido:</strong> la categoría que un jugador declara, sin validación.</li>
+<li><strong>Nivel validado:</strong> la categoría que surge de resultados confirmados por las dos parejas.</li>
+<li><strong>Partido desparejo:</strong> partido entre parejas de niveles reales distintos.</li>
+<li><strong>Pasado:</strong> jugador o pareja que juega por encima de la categoría en la que se anotó.</li>
+<li><strong>Liga:</strong> competencia de varias fechas entre las mismas parejas; por ejemplo, 8 parejas, 8 martes y playoff.</li>
+<li><strong>Fecha:</strong> cada jornada de la liga.</li>
+<li><strong>Fixture:</strong> quién juega contra quién en cada fecha, con cancha y horario.</li>
+<li><strong>Tabla:</strong> posiciones de la liga con puntos, games a favor, en contra y diferencia.</li>
+<li><strong>Playoff:</strong> cruces finales por posición (1º contra 8º, 2º contra 7º, hasta la final).</li>
+<li><strong>Organizador:</strong> quien arma la liga, el fixture y la tabla y junta los resultados.</li>
+<li><strong>Fiscal:</strong> en torneos formales, quien al final emite el informe de categoría.</li>
+<li><strong>Informe de categoría:</strong> decisión de ascender, confirmar, bajar o expulsar a un jugador de su categoría.</li>
+<li><strong>Turno:</strong> el alquiler de la cancha por un horario; en general lo pagan los cuatro jugadores.</li>
+<li><strong>Horario muerto:</strong> franja en la que un club tiene canchas sin alquilar.</li>
+<li><strong>Federado:</strong> jugador con ranking en una federación, fuera del alcance.</li>
+</ul>
+<hr />
+<!-- fuente: prd/research/2026-10-08-benchmark.md -->
+
+<h2 id="benchmark-nivelacion-de-padel">Benchmark — Nivelación de pádel</h2>
+<p>Investigación secundaria (web), hecha el 2026-10-08. Marcas: 📌 dato con fuente · 🔍 inferencia · ❓ hueco.</p>
+<h2 id="como-se-resuelve-hoy">Cómo se resuelve hoy</h2>
+<ul>
+<li>📌 Según Emilia: los partidos contra otras parejas se consiguen por grupos de WhatsApp, por el club o por el entrenador. La categoría (sexta, séptima…) es autopercibida.</li>
+</ul>
+<h2 id="competidores_1">Competidores</h2>
+<table>
+<thead>
+<tr>
+<th>Producto</th>
+<th>Qué hace</th>
+<th>Nivelación</th>
+<th>Presencia en Argentina</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Playtomic</strong> (España)</td>
+<td>Reserva de canchas, partidos abiertos, torneos, gestión de clubes</td>
+<td>📌 Escala de 0 a 7. Nivel inicial por cuestionario; se ajusta solo con partidos competitivos según resultado, nivel de rivales y compañero, y "fiabilidad". Hay clubes certificados que hacen sesiones de nivelación</td>
+<td>📌 Opera, pero en nov-2023 reconocía "menos clubes de los que nos gustaría". ❓ Cobertura actual</td>
+</tr>
+<tr>
+<td><strong>ATC – Alquilá Tu Cancha</strong> (Argentina)</td>
+<td>Marketplace de reservas y software de gestión para clubes</td>
+<td>📌 No menciona niveles. Matchmaking de jugadores figura como foco futuro</td>
+<td>📌 Líder local: +200.000 usuarios y 350–500 clubes; etapa seed</td>
+</tr>
+<tr>
+<td><strong>PadelMatch</strong> (México)</td>
+<td>Reservas, torneos, buscar compañeros y rivales</td>
+<td>📌 Cuatro categorías fijas (Novato a Pro), sin explicar cómo se asignan</td>
+<td>No; 📌 3 reseñas en App Store</td>
+</tr>
+</tbody>
+</table>
+<h2 id="lectura">Lectura</h2>
+<ul>
+<li>🔍 El problema de nivelación ya está resuelto técnicamente (Playtomic), pero no donde juega la gente en Argentina: los clubes están en ATC y los partidos se arman por WhatsApp.</li>
+<li>🔍 La oportunidad no es "otra app de reservas", sino un <strong>nivel confiable y portable</strong> que funcione en los canales que ya se usan.</li>
+<li>🔍 Riesgo principal: que Playtomic gane clubes en Argentina o que ATC lance su matchmaking con nivel. Ambos tienen la red de clubes, que es lo difícil de construir.</li>
+<li>🔍 Riesgo de producto: un sistema tipo Elo necesita muchos partidos con resultado cargado para ser confiable; con pocos usuarios el nivel no significa nada (problema del arranque en frío).</li>
+</ul>
+<h2 id="fuentes">Fuentes</h2>
+<ul>
+<li><a href="https://playerhelp.playtomic.com/hc/en-gb/articles/43310980754193-How-the-Playtomic-level-system-works">How the Playtomic level system works</a></li>
+<li><a href="https://helpmanager.playtomic.com/hc/en-gb/articles/20563641264145-The-Playtomic-Levels-Algorithm">The Playtomic Levels &amp; Algorithm</a></li>
+<li><a href="https://www.lanacion.com.ar/revista-lugares/playtomic-la-app-para-encontrar-donde-y-con-quien-jugar-al-padel-o-tenis-que-es-furor-en-europa-nid14112023/">La Nación — Playtomic, la app que es furor en Europa (2023)</a></li>
+<li><a href="https://www.descubre.vc/alquila-tu-cancha">Descubre.vc — Alquilá Tu Cancha</a></li>
+<li><a href="https://apps.apple.com/mx/app/padelmatch/id6751760053">App Store — PadelMatch</a></li>
+</ul>
+<hr />
+<!-- fuente: prd/research/2026-10-08-arquitectura-mvp.md -->
+
+<h2 id="arquitectura-tecnica-base-de-datos-y-stack-del-mvp">Arquitectura técnica, base de datos y stack del MVP</h2>
+<p>Hecho con el skill de CTO el 2026-10-08. Marcas: 📌 dicho por Emilia o con fuente · 🔍 inferencia · ❓ pendiente.</p>
+<h2 id="restricciones-confirmadas-por-emilia">Restricciones (confirmadas por Emilia)</h2>
+<ul>
+<li>📌 Trabaja sola, no programa, presupuesto cero y el plazo del curso.</li>
+<li>📌 Para el curso se construye solo la landing; el bot de WhatsApp queda para si el negocio sigue. Se simula como si fuera un negocio real, siempre con costo cero o muy bajo.</li>
+<li>🔍 Hay datos personales desde el primer día (nombre, email, WhatsApp): consentimiento obligatorio y la planilla nunca es pública.</li>
+</ul>
+<h2 id="decision-los-leads-se-guardan-en-una-google-sheet-via-google-apps-script">Decisión: los leads se guardan en una Google Sheet, vía Google Apps Script</h2>
+<p><strong>Por qué:</strong> con el alcance del curso (solo la landing), la planilla es lo más simple de armar, de ver y de mantener sin saber programar, y cuesta cero. Emilia ya trabaja en planillas, y la del grupo de validación vive en el mismo lugar.</p>
+<p><strong>Descartadas:</strong></p>
+<ul>
+<li><strong>Supabase:</strong> es la mejor base para el producto completo (jugadores, partidos, niveles) y evita migrar después, pero suma una herramienta nueva, reglas de seguridad para configurar y una pausa por inactividad en el plan gratis (📌 se pausa tras una semana sin actividad). No se justifica para una landing. Se reconsidera si se construye el bot.</li>
+<li><strong>Google Forms o Tally:</strong> cero código, pero no deja construir la landing propia, que es el objetivo del curso.</li>
+</ul>
+<p><strong>Deuda declarada:</strong></p>
+<ul>
+<li><strong>Migración:</strong> si se construye el bot, los leads se migran a una base de datos real (Supabase u otra). Es una exportación de CSV más una importación, de bajo costo mientras haya pocos cientos de filas.</li>
+<li><strong>Spam:</strong> la dirección del script es pública. Mitigación mínima: un campo trampa invisible y validación de datos en el script. Si aparece basura, se suma un captcha.</li>
+<li><strong>Cuotas de Apps Script:</strong> 📌 cada ejecución dura como máximo unos 6 minutos y hay cuotas diarias por cuenta. Sobra para el volumen esperado; se vigila el registro de ejecuciones.</li>
+</ul>
+<h2 id="arquitectura">Arquitectura</h2>
+<p><code>Landing estática (HTML + CSS + JS)
+  alojada en GitHub Pages (gratis; el repo del código tiene que ser público)
+     │
+     │  el formulario envía los datos (POST)
+     ▼
+Google Apps Script publicado como aplicación web
+  valida los campos, descarta lo que llena el campo trampa,
+  y agrega una fila con bloqueo para que dos envíos no se pisen
+     │
+     ▼
+Google Sheet privada "Leads" (solo Emilia tiene acceso)
+     │
+     └── Emilia invita a los leads al grupo de WhatsApp de validación</code></p>
+<p><strong>Por qué GitHub Pages:</strong> Emilia ya tiene cuenta de GitHub y el código ya vive ahí; no suma otra cuenta. Descartada Vercel, que es igual de gratis pero agrega otro servicio. El código de la landing no tiene secretos (la dirección del script es pública por diseño), así que el repo público no expone nada.</p>
+<h2 id="base-de-datos-hoja-leads">Base de datos: hoja "Leads"</h2>
+<table>
+<thead>
+<tr>
+<th>Columna</th>
+<th>Tipo</th>
+<th>Obligatoria</th>
+<th>Para qué</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>fecha</code></td>
+<td>fecha y hora (la pone el script)</td>
+<td>Sí</td>
+<td>Cuándo se registró</td>
+</tr>
+<tr>
+<td><code>nombre</code></td>
+<td>texto</td>
+<td>Sí</td>
+<td>Contacto</td>
+</tr>
+<tr>
+<td><code>email</code></td>
+<td>texto</td>
+<td>Sí</td>
+<td>Contacto; el script avisa si se repite</td>
+</tr>
+<tr>
+<td><code>whatsapp</code></td>
+<td>texto</td>
+<td>Sí</td>
+<td>Canal del producto y del grupo de validación</td>
+</tr>
+<tr>
+<td><code>categoria_declarada</code></td>
+<td>número del 1 al 8</td>
+<td>Sí</td>
+<td>📌 La categoría que el jugador dice tener. Es la línea de base para comparar después con el nivel validado y medir cuánta gente juega en la categoría que debería</td>
+</tr>
+<tr>
+<td><code>partidos_desparejos_mes</code></td>
+<td>número (0, 1, 2, 3 o más)</td>
+<td>No</td>
+<td>🔍 Cuántos partidos desparejos le tocaron en el último mes: valida el problema con datos propios</td>
+</tr>
+<tr>
+<td><code>fuente</code></td>
+<td>texto</td>
+<td>No</td>
+<td>De dónde vino: club, Instagram, boca a boca (se toma de la URL si viene marcada)</td>
+</tr>
+<tr>
+<td><code>consentimiento</code></td>
+<td>sí/no</td>
+<td>Sí</td>
+<td>Sin consentimiento no se guarda</td>
+</tr>
+</tbody>
+</table>
+<h2 id="stack">Stack</h2>
+<table>
+<thead>
+<tr>
+<th>Pieza</th>
+<th>Herramienta</th>
+<th>Costo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Landing</td>
+<td>HTML, CSS y JavaScript simples, sin framework</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Alojamiento</td>
+<td>GitHub Pages</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Recepción del formulario</td>
+<td>Google Apps Script (aplicación web)</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Almacenamiento de leads</td>
+<td>Google Sheet privada</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Construcción</td>
+<td>Claude Code</td>
+<td>Incluido en el plan de Emilia</td>
+</tr>
+</tbody>
+</table>
+<h2 id="si-sigue-el-negocio-el-bot-no-entra-en-el-curso">Si sigue el negocio: el bot (no entra en el curso)</h2>
+<ul>
+<li>📌 Desde el 15-01-2026, Meta prohíbe en WhatsApp los asistentes de IA de uso general y permite bots de un servicio concreto (reservas, soporte, notificaciones). 🔍 Un bot que arma partidos de pádel encaja en esa lógica, aunque la fuente no lo nombra.</li>
+<li>📌 Desde el 01-10-2026, Meta cobra también los mensajes de servicio: el bot deja de ser costo cero.</li>
+<li>❓ No se pudo confirmar que un bot participe en grupos: se diseña para conversaciones uno a uno.</li>
+<li>🔍 Al construirlo, los datos pasan a una base real con tablas de jugadores, parejas, partidos y confirmaciones de nivel.</li>
+</ul>
+<h2 id="proximos-pasos-verificables">Próximos pasos verificables</h2>
+<ol>
+<li>Crear un repo aparte para el código de la landing. <strong>Prueba:</strong> el repo existe en GitHub y GitHub Pages muestra una página.</li>
+<li>Crear la Google Sheet y el Apps Script. <strong>Prueba:</strong> un envío de prueba agrega una fila con fecha.</li>
+<li>Construir la landing (problema, solución y formulario) y conectarla. <strong>Prueba:</strong> Emilia se registra desde el celular y ve su fila en la planilla.</li>
+</ol>
+<h2 id="fuentes_1">Fuentes</h2>
+<ul>
+<li><a href="https://automationatlas.io/answers/supabase-free-tier-limits-2026/">Automation Atlas — Supabase free tier limits 2026</a></li>
+<li><a href="https://respond.io/blog/whatsapp-chatbot-policy-2026">respond.io — WhatsApp chatbot policy 2026</a></li>
+<li><a href="https://achiya-automation.com/en/blog/whatsapp-cloud-api-2026-update/">Achiya Automation — WhatsApp Cloud API 2026 update</a></li>
+<li><a href="https://bettersheets.co/explained/quota">Better Sheets — Apps Script quotas</a></li>
+</ul>
+<hr />
+<!-- fuente: prd/decisions/2026-10-08-camino-mvp.md -->
+
+<blockquote>
+<p>Reemplazada el 2026-10-16 por Ligas para organizadores.</p>
+</blockquote>
+<h2 id="camino-del-mvp-landing-grupo-de-validacion-bot-de-whatsapp">Camino del MVP: landing, grupo de validación, bot de WhatsApp</h2>
+<p><strong>Qué:</strong> el producto avanza en tres etapas. (0) Una landing que explica el problema y la solución y capta interesados (nombre, email, WhatsApp). (1) Un grupo de WhatsApp gestionado a mano, con 10 a 20 parejas durante 2 a 3 semanas, donde se cargan resultados y los rivales confirman el nivel. (2) Un bot conversacional de WhatsApp que automatiza lo que funcionó en el grupo. La landing es el MVP del desafío del curso; el bot es la visión.</p>
+<p><strong>Por qué:</strong> los partidos ya se arman por WhatsApp, así que es el canal de mayor adopción. Una web de carga tiene baja adopción. El grupo manual valida el comportamiento antes de construir. El nivel se valida entre rivales y se cruza con el resultado del partido, para que una calificación de revancha o entre amigos no se sostenga. La validación por entrenadores queda como segunda capa, más adelante.</p>
+<p><strong>Qué la invalidaría:</strong> que en el grupo de validación los jugadores no carguen resultados o no confirmen niveles; que las reglas de WhatsApp impidan un bot de este tipo (a verificar con el skill de CTO); o que Playtomic o ATC lancen nivelación con adopción real en Argentina antes.</p>
+<hr />
+<!-- fuente: prd/research/2026-10-13-experiencia-bot.md -->
+
+<h2 id="experiencia-de-coordinar-un-partido-con-el-bot-y-como-correrla-a-mano">Experiencia de coordinar un partido con el bot (y cómo correrla a mano)</h2>
+<p>Marcas: 📌 dicho por Emilia o con fuente · 🔍 inferencia o propuesta · ❓ pendiente.</p>
+<p>🔍 Propuesta de diseño hecha en conversación, no una decisión. No está en el PRD ni en <code>decisions/</code>. Sirve de guion para el bot (etapa 2) y, adaptado, para el grupo de validación manual (etapa 1).</p>
+<h2 id="principios">Principios</h2>
+<ul>
+<li>📌 Los partidos ya se arman por WhatsApp (camino del MVP, 2026-10-08).</li>
+<li>🔍 Conversación uno a uno, con botones y poco texto.</li>
+<li>❓ Si un bot puede participar en grupos de WhatsApp no se pudo confirmar (arquitectura del MVP, 2026-10-08). Todo el diseño es 1 a 1.</li>
+<li>🔍 El bot no reserva canchas: el turnero está fuera del alcance (<code>context/scope.md</code>).</li>
+</ul>
+<h2 id="antes-del-partido">Antes del partido</h2>
+<ol>
+<li><strong>Alta, una sola vez.</strong> El bot pide nombre, categoría declarada, club y días/horarios habituales. Si viene de la landing, esos datos ya existen.</li>
+<li><strong>Pedido de rival.</strong> El jugador escribe "busco rival". El bot pregunta día, hora, club y quién es su compañero.</li>
+<li><strong>Búsqueda.</strong> El bot propone una pareja disponible:<blockquote>
+<p>Encontré una pareja para el sábado 19 hs en el Club X. Nivel validado: 6ª, con 4 partidos confirmados. ¿Les sirve?
+<strong>[Sí] [Ver otra] [No]</strong></p>
+</blockquote>
+</li>
+<li><strong>Doble aceptación.</strong> Solo cuando las dos parejas aceptan, el bot pasa los contactos. Nunca se expone el número de un desconocido antes.</li>
+<li><strong>Cancha.</strong> La reservan los jugadores y lo marcan: "reservada".</li>
+<li><strong>Recordatorio</strong> un día antes con hora, club y rivales.</li>
+</ol>
+<h2 id="despues-del-partido">Después del partido</h2>
+<ol start="7">
+<li><strong>Resultado.</strong> A las 2 horas el bot le pregunta a una persona de cada pareja: "¿Cómo salió?". Si las dos respuestas coinciden, el resultado queda cargado.</li>
+<li><strong>Pregunta clave.</strong> "Ese nivel que declararon, ¿fue el real?" con tres botones: <strong>[Más bajo] [Igual] [Más alto]</strong>. Se pregunta a cada pareja por separado y a ciegas.</li>
+<li><strong>Cierre.</strong> El bot agradece y muestra el nivel actualizado.</li>
+</ol>
+<h2 id="donde-puede-fallar">Dónde puede fallar</h2>
+<table>
+<thead>
+<tr>
+<th>Riesgo</th>
+<th>Qué hacer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🔍 Los rivales que acaban de perder se vengan en la calificación</td>
+<td>El nivel sale de cruzar la respuesta con el marcador (<code>context/scope.md</code>). Una calificación que contradice el resultado pesa menos. ❓ La regla exacta de ponderación no está definida.</td>
+</tr>
+<tr>
+<td>🔍 Con pocos jugadores en La Plata, la búsqueda casi siempre dirá "no hay rivales"</td>
+<td>Por eso existe la etapa 1 manual: se junta masa antes de automatizar.</td>
+</tr>
+<tr>
+<td>🔍 La categoría es individual, pero los partidos son de parejas</td>
+<td>El nivel sigue a la persona, no a la pareja. ❓ Cómo se combina el nivel de dos jugadores no está definido.</td>
+</tr>
+<tr>
+<td>🔍 La gente no contesta</td>
+<td>Es el supuesto que invalida el PRD si responde menos de la mitad de los partidos (<code>context/scope.md</code>).</td>
+</tr>
+<tr>
+<td>📌 Desde el 01-10-2026 Meta cobra también los mensajes de servicio</td>
+<td>🔍 Un partido genera unos 4 a 6 mensajes iniciados por el bot por jugador (recordatorio, resultado, pregunta clave). El costo cero deja de valer para el bot. ❓ El monto exacto no se calculó.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="como-correrlo-a-mano-en-la-etapa-1">Cómo correrlo a mano en la etapa 1</h2>
+<p>🔍 El mismo guion, con Emilia haciendo el papel del bot. Es una propuesta, no una decisión.</p>
+<table>
+<thead>
+<tr>
+<th>Paso del bot</th>
+<th>Versión manual</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Alta</td>
+<td>Ya está en la Google Sheet de leads.</td>
+</tr>
+<tr>
+<td>Búsqueda de rival</td>
+<td>Emilia mira la planilla y propone parejas por mensaje directo.</td>
+</tr>
+<tr>
+<td>Doble aceptación</td>
+<td>Emilia pasa los contactos solo cuando las dos parejas dijeron que sí.</td>
+</tr>
+<tr>
+<td>Recordatorio</td>
+<td>Mensaje manual un día antes.</td>
+</tr>
+<tr>
+<td>Resultado y pregunta clave</td>
+<td>Mensaje uno a uno a cada pareja; las respuestas se cargan en una pestaña de partidos de la misma planilla.</td>
+</tr>
+</tbody>
+</table>
+<p>Lo que se mide en esta etapa:</p>
+<ul>
+<li>❓ Qué porcentaje de partidos llega a tener resultado y nivel confirmado (umbral pendiente, ver <code>context/scope.md</code>).</li>
+<li>❓ Si la pareja inferior también vive el partido desparejo como un problema (<code>context/open-questions.md</code>).</li>
+</ul></article>
+</main>
+<footer class="wrap">Liga Pareja · La Plata</footer>
+<script>if (innerWidth < 960) document.getElementById('toc').removeAttribute('open');</script>
+</body>
+</html>
