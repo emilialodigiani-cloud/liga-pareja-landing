@@ -1,6 +1,6 @@
 // Dirección del Apps Script publicado como aplicación web.
-// Vacía mientras la planilla no esté conectada: el formulario funciona en modo prueba.
-const SCRIPT_URL = '';
+// Si queda vacía, el formulario funciona en modo prueba y no guarda nada.
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxI-JFybKHqyVILm9Rqpf7LtdlK2Qqs3k7HvA9QEvq6SVJP8IHocEz1IQzs9KJJxNc9Cw/exec';
 
 // WhatsApp de quien recibe a los organizadores, con código de país y sin espacios (ej. 5492215551234).
 const WHATSAPP_ORGANIZADOR = '5492215678025';
