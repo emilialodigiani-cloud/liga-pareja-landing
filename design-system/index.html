@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Liga Pareja · Design system</title>
+<meta name="description" content="Design system de Liga Pareja: marca, color, tipografía y componentes en estilo manual de instrucciones.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;600&display=swap">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="bundle.css">
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; }
+.top { padding: var(--space-6) 0; background-image: radial-gradient(circle, rgba(255,255,255,.28) 1.5px, transparent 1.6px); background-size: var(--dot-pitch) var(--dot-pitch); }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 var(--space-4); }
+.top .wrap { display: flex; flex-wrap: wrap; gap: var(--space-4); justify-content: space-between; align-items: end; }
+.top h1 { font-size: clamp(40px, 9vw, 64px); line-height: .95; }
+.top p { margin: var(--space-2) 0 0; }
+.toggle { background: transparent; color: var(--on-band); box-shadow: inset 0 0 0 2px var(--on-band); }
+nav { position: sticky; top: 0; z-index: 2; background: var(--surface); border-bottom: 1px solid var(--line); }
+nav .wrap { display: flex; gap: var(--space-4); overflow-x: auto; padding-block: var(--space-3); }
+nav a { font: 600 12px/16px var(--font-text); letter-spacing: .08em; text-transform: uppercase; color: var(--brand); text-decoration: none; white-space: nowrap; }
+main section.block { padding-top: var(--space-10); }
+h2.sec { font: 700 28px/32px var(--font-display); letter-spacing: .02em; text-transform: uppercase; color: var(--brand); margin: 0 0 var(--space-6); }
+.doc { max-width: 720px; }
+.doc h2 { font: 700 22px/28px var(--font-display); text-transform: uppercase; letter-spacing: .02em; color: var(--brand); margin: var(--space-6) 0 var(--space-2); }
+.doc table { border-collapse: collapse; width: 100%; font-size: 15px; line-height: 22px; display: block; overflow-x: auto; }
+.doc th, .doc td { text-align: left; padding: var(--space-2) var(--space-3); border-bottom: 1px solid var(--line); vertical-align: top; }
+.doc th { font: 600 12px/16px var(--font-text); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-muted); }
+code { font-family: ui-monospace, Menlo, monospace; font-size: .85em; background: var(--surface-sunken); padding: 1px 5px; border-radius: 4px; }
+.grid { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+.sw { display: grid; grid-template-columns: 56px 1fr; gap: var(--space-3); align-items: start; }
+.chip { width: 56px; height: 56px; border-radius: var(--radius-sm); border: 1px solid var(--line); }
+.sw p, .ty p { margin: var(--space-1) 0 0; font-size: 13px; line-height: 18px; color: var(--ink-muted); }
+.vals { font-size: 12px; line-height: 16px; color: var(--ink-muted); }
+.ty { padding: var(--space-4) 0; border-bottom: 1px solid var(--line); }
+.ty-meta { display: flex; gap: var(--space-3); font-size: 12px; color: var(--ink-muted); margin-bottom: var(--space-2); }
+.spc { display: flex; align-items: center; gap: var(--space-3); font-size: 14px; margin-bottom: var(--space-2); }
+.bar { height: 16px; background: var(--brand); display: inline-block; }
+.rads { display: flex; gap: var(--space-4); flex-wrap: wrap; margin-top: var(--space-6); }
+.rad { width: 120px; height: 72px; border: 2px solid var(--brand); display: grid; place-items: center; align-content: center; font-size: 13px; }
+.comp { padding: var(--space-6) 0; border-bottom: 1px solid var(--line); }
+.comp h3 { font: 700 22px/28px var(--font-display); letter-spacing: .02em; text-transform: uppercase; margin: 0 0 var(--space-2); }
+.comp-doc { max-width: 720px; font-size: 15px; line-height: 22px; color: var(--ink-muted); }
+.comp iframe { width: 100%; border: 1px solid var(--line); border-radius: var(--radius-md); margin-top: var(--space-4); background: var(--surface); display: block; }
+footer { padding: var(--space-10) 0; font-size: 14px; color: var(--ink-muted); }
+</style>
+</head>
+<body>
+<header class="top lp-band"><div class="wrap"><div><h1 class="lp-headline">Liga Pareja</h1><p>Design system · estilo manual de instrucciones</p></div><button class="lp-btn toggle" type="button" id="tema">Tema oscuro</button></div></header>
+<nav><div class="wrap"><a href="#marca">Marca</a><a href="#color">Color</a><a href="#tipografia">Tipografía</a><a href="#espacios">Espacios</a><a href="#componentes">Componentes</a><a href="../">Ver la landing</a></div></nav>
+<main class="wrap">
+<section class="block" id="marca"><h2 class="sec">Marca</h2><div class="doc"><p>Liga Pareja organiza ligas amateurs de pádel en La Plata: inscripción, fixture, resultados confirmados por las dos parejas y tabla. Lo usan organizadores y jugadores de octava a cuarta, casi siempre desde el celular y llegando por un link de WhatsApp. El estilo es el de un manual de instrucciones: azul eléctrico sobre blanco, ilustraciones de línea fina, retícula de puntos, anotaciones técnicas y un verde loro para la acción.</p>
+<h2>Voz y contenido</h2>
+<ul>
+<li>Hablá de vos, en rioplatense y con frases cortas: "Cargás el resultado y la pareja rival lo confirma."</li>
+<li>Usá las palabras del pádel tal como se dicen en el club: fecha, cruce, games, categoría, sexta, "pasado", playoff, fecha libre.</li>
+<li>Los botones dicen exactamente lo que pasa: "Anotarnos", "Cargar resultado", "Confirmar", "Rechazar". Después, un aviso que confirma: "Resultado confirmado".</li>
+<li>Los errores dicen qué falta y cómo arreglarlo: "Revisá los WhatsApp: tienen que tener código de área."</li>
+<li>Sin emoji, sin signos de exclamación dobles, sin superlativos.</li>
+<li>Nunca muestres teléfonos ni emails en una página pública. Las parejas se nombran por apellidos: "Ruiz / Ferrari".</li>
+</ul>
+<h2>Color</h2>
+<ul>
+<li>La página va sobre <code>surface</code> (blanco puro en claro, como el papel del manual). Tarjetas, formulario y tabla en <code>surface-raised</code>, separadas con <code>line</code>, sin sombra. Texto en <code>ink</code>, secundario en <code>ink-muted</code>.</li>
+<li><code>brand</code> (azul eléctrico) es el color de la marca: ilustraciones, titulares, links, botón principal y la pareja que gana.</li>
+<li><code>accent</code> (verde loro) es un solo llamado a la acción por pantalla (en la landing, "Anotarme en la liga") con texto <code>on-accent</code>, y la pelota en las ilustraciones. Nunca como texto sobre blanco.</li>
+<li><code>band</code> es el negativo: portada, encabezado de la landing y el cuadro del número de jugada, con todo lo de encima en <code>on-band</code>. Es el mismo azul en los dos temas.</li>
+<li><code>dots</code> es la retícula de puntos de fondo (<code>lp-dots</code>), cada <code>dot-pitch</code>.</li>
+<li><code>line</code> es solo decorativo. Los bordes de inputs y checkbox usan <code>line-strong</code>.</li>
+<li>Los estados de partido tienen su par de tokens (<code>status-*-fg</code> sobre <code>status-*-bg</code>) y siempre llevan la palabra y un glifo. Confirmado es azul a propósito, para no confundirse con el verde de acción. En juego es violeta y Cancelado, gris neutro.</li>
+</ul>
+<h2>Estilo manual</h2>
+<ul>
+<li>Ilustraciones monocromas de línea fina en <code>brand</code> (1,2 a 1,6px), con rellenos planos del mismo <code>brand</code>. Sobre <code>band</code>, las líneas van en <code>on-band</code>.</li>
+<li>Motivos del pádel: cancha en perspectiva con paredes de vidrio, red y líneas de saque, piso en grilla, paleta y pelota. La pelota siempre en <code>accent</code>.</li>
+<li>Anotaciones técnicas: etiqueta en mayúsculas (<code>label</code>) con línea guía (<code>lp-annot</code>).</li>
+<li>Pasos numerados en círculo (<code>lp-step</code>), número de jugada en un cuadrado <code>band</code> (<code>lp-play</code>) y trayectorias punteadas con flecha.</li>
+<li>Titulares en Barlow Condensed y en mayúsculas; el texto corrido con aire (<code>body</code>, interletra 0,02em).</li>
+<li>Nunca uses logos de marcas, clubes o federaciones en las ilustraciones.</li>
+</ul>
+<h2>Estados de un partido</h2>
+<table>
+<thead>
+<tr>
+<th>Estado</th>
+<th>Qué significa</th>
+<th>Tokens</th>
+<th>Glifo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Agendado</td>
+<td>El partido tiene fecha y todavía no se jugó</td>
+<td><code>status-scheduled-*</code></td>
+<td>○</td>
+</tr>
+<tr>
+<td>En juego</td>
+<td>El partido se está jugando; la etiqueta muestra la hora agendada</td>
+<td><code>status-playing-*</code></td>
+<td>●</td>
+</tr>
+<tr>
+<td>Cargado</td>
+<td>Una pareja cargó el resultado; falta que la rival confirme</td>
+<td><code>status-loaded-*</code></td>
+<td>…</td>
+</tr>
+<tr>
+<td>Confirmado</td>
+<td>Las dos parejas coinciden; cuenta en la tabla</td>
+<td><code>status-confirmed-*</code></td>
+<td>✓</td>
+</tr>
+<tr>
+<td>En disputa</td>
+<td>El rival rechazó el resultado; decide el organizador</td>
+<td><code>status-dispute-*</code></td>
+<td>!</td>
+</tr>
+<tr>
+<td>Cancelado</td>
+<td>Una pareja no se presentó a jugar; la que se presentó suma los puntos</td>
+<td><code>status-cancelled-*</code></td>
+<td>×</td>
+</tr>
+</tbody>
+</table>
+<p>Suman en la tabla los partidos confirmados y los cancelados, que le dan los puntos a la pareja que se presentó.</p>
+<h2>Tipografía</h2>
+<ul>
+<li>Barlow Condensed (<code>display</code>) en mayúsculas para titulares, números de jugada, resultados y números de la tabla. Barlow (<code>text</code>) para todo lo demás.</li>
+<li>Estilos: <code>display</code> una vez por pantalla, <code>title</code> para secciones, <code>heading</code> para el título de una jugada del manual, <code>play-number</code> dentro de <code>lp-play</code>, <code>score</code> para resultados, <code>body</code> para texto corrido, <code>body-strong</code> para nombres de parejas, <code>small</code> para fecha, cancha y hora, <code>label</code> en mayúsculas para anotaciones, estados y encabezados de tabla.</li>
+<li>Los números que se comparan en columna llevan cifras tabulares (<code>font-variant-numeric: tabular-nums</code>).</li>
+<li>Texto corrido a 17px, para que se lea en el celular sin zoom.</li>
+</ul>
+<h2>Espaciado, radios y layout</h2>
+<ul>
+<li>Diseñá primero para 360–400px de ancho. Margen lateral mínimo <code>space-4</code>.</li>
+<li><code>space-2</code> entre etiqueta y campo, <code>space-6</code> entre grupos, <code>space-10</code> entre secciones.</li>
+<li>Los botones van en mayúsculas. Botones y estados en <code>radius-pill</code>; tarjetas, formulario y tabla en <code>radius-md</code>; inputs en <code>radius-sm</code>.</li>
+<li>Los controles miden 48px de alto como mínimo (44px dentro de una tarjeta de partido).</li>
+<li>El estilo es plano: se separa con <code>line</code> y con la retícula, casi nunca con sombra.</li>
+</ul>
+<h2>Foco y accesibilidad</h2>
+<ul>
+<li>El foco de teclado es un anillo sólido de 2px en <code>focus</code>, separado 2px del elemento. Se ve sobre todas las superficies en los dos temas.</li>
+<li>Todo texto cumple 4,5:1 sobre su fondo en los dos temas; bordes de controles, 3:1.</li>
+</ul>
+<h2>Iconografía y logo</h2>
+<ul>
+<li>Todavía no hay logo: el nombre "Liga Pareja" va escrito en Barlow Condensed. Cuando exista, se suma en el grupo Logos.</li>
+<li>No hay set de íconos. Los estados usan los glifos de la tabla de arriba. El botón para avisar al rival por WhatsApp dice "Avisar por WhatsApp", sin el logo de WhatsApp.</li>
+</ul>
+<h2>Componentes</h2>
+<p>Son clases CSS con prefijo <code>lp-</code> en <code>components/bundle.css</code>; no hace falta React. Usá <code>lp-btn</code>, <code>lp-field</code>, <code>lp-check</code>, <code>lp-status</code>, <code>lp-match</code>, <code>lp-table</code> y <code>lp-notice</code> como muestran sus fichas, y <code>lp-dots</code>, <code>lp-band</code>, <code>lp-play</code>, <code>lp-step</code> y <code>lp-annot</code> para el estilo manual (ver la ficha ManualCarga).</p></div></section>
+<section class="block" id="color"><h2 class="sec">Color</h2><p class="lp-field__help" style="margin:0 0 var(--space-4)">Cada token muestra su valor en claro · oscuro.</p><div class="grid"><div class="sw"><div class="chip" style="background:var(--surface)"></div><div><code>surface</code><div class="vals">#ffffff · #070d33</div><p>Fondo de la página. En claro es blanco puro, como el papel del manual.</p></div></div><div class="sw"><div class="chip" style="background:var(--surface-raised)"></div><div><code>surface-raised</code><div class="vals">#ffffff · #0f1847</div><p>Tarjetas, formulario y tabla. En claro se separan con line, no con sombra.</p></div></div><div class="sw"><div class="chip" style="background:var(--surface-sunken)"></div><div><code>surface-sunken</code><div class="vals">#f3f5fe · #0b1240</div><p>Fondos de sección y campos deshabilitados.</p></div></div><div class="sw"><div class="chip" style="background:var(--ink)"></div><div><code>ink</code><div class="vals">#0d1440 · #eef1ff</div><p>Texto principal sobre surface, surface-raised, surface-sunken y brand-tint.</p></div></div><div class="sw"><div class="chip" style="background:var(--ink-muted)"></div><div><code>ink-muted</code><div class="vals">#4a5380 · #aab3e0</div><p>Texto secundario y metadatos (fecha, cancha, hora) sobre surface y surface-raised.</p></div></div><div class="sw"><div class="chip" style="background:var(--line)"></div><div><code>line</code><div class="vals">#d7ddf7 · #253070</div><p>Divisores y bordes de tarjeta. Decorativo.</p></div></div><div class="sw"><div class="chip" style="background:var(--line-strong)"></div><div><code>line-strong</code><div class="vals">#7d86b3 · #6f7bc0</div><p>Bordes de inputs, selects y checkbox: 3:1 sobre surface y surface-raised.</p></div></div><div class="sw"><div class="chip" style="background:var(--brand)"></div><div><code>brand</code><div class="vals">#234cf0 · #7f99ff</div><p>Azul eléctrico. Ilustraciones de línea, titulares, links, botón principal y la pareja ganadora. Como texto, sobre surface y surface-raised.</p></div></div><div class="sw"><div class="chip" style="background:var(--brand-tint)"></div><div><code>brand-tint</code><div class="vals">#e8edfe · #16226a</div><p>Fila de la pareja propia en la tabla y fondos suaves.</p></div></div><div class="sw"><div class="chip" style="background:var(--on-brand)"></div><div><code>on-brand</code><div class="vals">#ffffff · #070d33</div><p>Texto sobre brand (botón principal).</p></div></div><div class="sw"><div class="chip" style="background:var(--band)"></div><div><code>band</code><div class="vals">#234cf0 · #234cf0</div><p>Fondo en negativo: portada, encabezado de la landing y el cuadro de número de jugada. Igual en los dos temas.</p></div></div><div class="sw"><div class="chip" style="background:var(--on-band)"></div><div><code>on-band</code><div class="vals">#ffffff · #ffffff</div><p>Texto, líneas e ilustraciones sobre band.</p></div></div><div class="sw"><div class="chip" style="background:var(--accent)"></div><div><code>accent</code><div class="vals">#5ee04a · #5ee04a</div><p>Verde loro. Un solo llamado a la acción por pantalla y la pelota en las ilustraciones. Nunca como texto sobre blanco.</p></div></div><div class="sw"><div class="chip" style="background:var(--on-accent)"></div><div><code>on-accent</code><div class="vals">#0d1440 · #0d1440</div><p>Texto sobre accent.</p></div></div><div class="sw"><div class="chip" style="background:var(--dots)"></div><div><code>dots</code><div class="vals">#c3cdfb · #25307a</div><p>Retícula de puntos de fondo.</p></div></div><div class="sw"><div class="chip" style="background:var(--focus)"></div><div><code>focus</code><div class="vals">#0d1440 · #5ee04a</div><p>Anillo de foco de teclado: 2px sólido con 2px de separación. 3:1 sobre todas las superficies.</p></div></div><div class="sw"><div class="chip" style="background:var(--scrim)"></div><div><code>scrim</code><div class="vals">rgba(13, 20, 64, 0.5) · rgba(0, 0, 0, 0.6)</div><p>Velo oscuro detrás de un modal. Oscurece la pantalla en los dos temas.</p></div></div><div class="sw"><div class="chip" style="background:var(--status-scheduled-fg)"></div><div><code>status-scheduled-fg</code><div class="vals">#4a5380 · #b7bfe6</div><p>Texto del estado Agendado sobre status-scheduled-bg.</p></div></div><div class="sw"><div class="chip" style="background:var(--status-scheduled-bg)"></div><div><code>status-scheduled-bg</code><div class="vals">#eef0f8 · #1a2358</div><p>Agendado: el partido tiene fecha y todavía no se jugó.</p></div></div><div class="sw"><div class="chip" style="background:var(--status-playing-fg)"></div><div><code>status-playing-fg</code><div class="vals">#6a2bc2 · #d4b8ff</div><p>Texto del estado En juego sobre status-playing-bg.</p></div></div><div class="sw"><div class="chip" style="background:var(--status-playing-bg)"></div><div><code>status-playing-bg</code><div class="vals">#f1e8fd · #2e1a57</div><p>En juego: el partido se está jugando. La etiqueta muestra la hora agendada.</p></div></div><div class="sw"><div class="chip" style="background:var(--status-loaded-fg)"></div><div><code>status-loaded-fg</code><div class="vals">#8a4b00 · #f6c96b</div><p>Texto del estado Cargado sobre status-loaded-bg.</p></div></div><div class="sw"><div class="chip" style="background:var(--status-loaded-bg)"></div><div><code>status-loaded-bg</code><div class="vals">#fff0d4 · #3a2c0d</div><p>Cargado: una pareja cargó el resultado y falta que la rival confirme.</p></div></div><div class="sw"><div class="chip" style="background:var(--status-confirmed-fg)"></div><div><code>status-confirmed-fg</code><div class="vals">#1d3fd0 · #a9bbff</div><p>Texto del estado Confirmado sobre status-confirmed-bg. Es azul a propósito, para no confundirse con el verde de acción.</p></div></div><div class="sw"><div class="chip" style="background:var(--status-confirmed-bg)"></div><div><code>status-confirmed-bg</code><div class="vals">#e3e9ff · #1b2a80</div><p>Confirmado: las dos parejas coinciden y el resultado suma en la tabla.</p></div></div><div class="sw"><div class="chip" style="background:var(--status-dispute-fg)"></div><div><code>status-dispute-fg</code><div class="vals">#b42318 · #ff9b8f</div><p>Texto del estado En disputa y de errores, sobre status-dispute-bg y surface-raised.</p></div></div><div class="sw"><div class="chip" style="background:var(--status-dispute-bg)"></div><div><code>status-dispute-bg</code><div class="vals">#fde3df · #43181a</div><p>En disputa: la rival rechazó el resultado y decide el organizador.</p></div></div><div class="sw"><div class="chip" style="background:var(--status-cancelled-fg)"></div><div><code>status-cancelled-fg</code><div class="vals">#55565e · #c9cad2</div><p>Texto del estado Cancelado sobre status-cancelled-bg.</p></div></div><div class="sw"><div class="chip" style="background:var(--status-cancelled-bg)"></div><div><code>status-cancelled-bg</code><div class="vals">#ececee · #2a2b35</div><p>Cancelado: una pareja no se presentó a jugar y la que se presentó suma los puntos. Gris neutro, sin azul, para no confundirse con Agendado.</p></div></div></div></section>
+<section class="block" id="tipografia"><h2 class="sec">Tipografía</h2><div class="ty"><div class="ty-meta"><code>display</code><span>56px/52px · 700</span></div><div style="font-family:var(--font-display);font-size:56px;line-height:52px;font-weight:700;letter-spacing:0.01em;text-transform:uppercase;">MANUAL DE LA LIGA</div><p>Titular en mayúsculas, uno por pantalla.</p></div><div class="ty"><div class="ty-meta"><code>title</code><span>28px/32px · 700</span></div><div style="font-family:var(--font-display);font-size:28px;line-height:32px;font-weight:700;letter-spacing:0.02em;text-transform:uppercase;">TABLA · FECHA 5</div><p>Títulos de sección, en mayúsculas.</p></div><div class="ty"><div class="ty-meta"><code>score</code><span>28px/28px · 600</span></div><div style="font-family:var(--font-display);font-size:28px;line-height:28px;font-weight:600;letter-spacing:0;text-transform:uppercase;">6-4 6-3</div><p>Resultados y números de la tabla, con cifras tabulares.</p></div><div class="ty"><div class="ty-meta"><code>play-number</code><span>30px/30px · 700</span></div><div style="font-family:var(--font-display);font-size:30px;line-height:30px;font-weight:700;letter-spacing:0;text-transform:uppercase;">01</div><p>Número de jugada dentro del cuadro band.</p></div><div class="ty"><div class="ty-meta"><code>body</code><span>17px/28px · 400</span></div><div style="font-family:var(--font-text);font-size:17px;line-height:28px;font-weight:400;letter-spacing:0.02em;">Cargás el resultado y la pareja rival lo confirma.</div><p>Texto corrido, con aire. 17px en celular.</p></div><div class="ty"><div class="ty-meta"><code>body-strong</code><span>17px/28px · 600</span></div><div style="font-family:var(--font-text);font-size:17px;line-height:28px;font-weight:600;letter-spacing:0.02em;">Ruiz / Ferrari</div><p>Nombres de parejas y etiquetas de campo.</p></div><div class="ty"><div class="ty-meta"><code>small</code><span>14px/20px · 400</span></div><div style="font-family:var(--font-text);font-size:14px;line-height:20px;font-weight:400;letter-spacing:0.02em;">Cancha 3 · 22:00</div><p>Metadatos y ayudas.</p></div><div class="ty"><div class="ty-meta"><code>label</code><span>12px/16px · 600</span></div><div style="font-family:var(--font-text);font-size:12px;line-height:16px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;">PARED DE VIDRIO</div><p>Anotaciones con línea guía, estados y encabezados de tabla, en mayúsculas.</p></div><div class="ty"><div class="ty-meta"><code>heading</code><span>18px/24px · 600</span></div><div style="font-family:var(--font-text);font-size:18px;line-height:24px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;">CÓMO SE CARGA UN RESULTADO.</div><p>Título de una jugada del manual, en mayúsculas y en brand, junto al número de jugada.</p></div></section>
+<section class="block" id="espacios"><h2 class="sec">Espacios y radios</h2><div class="spc"><span class="bar" style="width:4px"></span><code>space-1</code> 4px</div><div class="spc"><span class="bar" style="width:8px"></span><code>space-2</code> 8px</div><div class="spc"><span class="bar" style="width:12px"></span><code>space-3</code> 12px</div><div class="spc"><span class="bar" style="width:16px"></span><code>space-4</code> 16px</div><div class="spc"><span class="bar" style="width:24px"></span><code>space-6</code> 24px</div><div class="spc"><span class="bar" style="width:40px"></span><code>space-10</code> 40px</div><div class="spc"><span class="bar" style="width:24px"></span><code>dot-pitch</code> 24px</div><div class="rads"><div class="rad" style="border-radius:6px"><code>radius-sm</code><span>6px</span></div><div class="rad" style="border-radius:12px"><code>radius-md</code><span>12px</span></div><div class="rad" style="border-radius:999px"><code>radius-pill</code><span>999px</span></div></div></section>
+<section class="block" id="componentes"><h2 class="sec">Componentes</h2><section class="comp" id="Cover"><h3>Portada</h3><div class="comp-doc"></div><iframe title="Portada" data-src="componentes/Cover.html" src="componentes/Cover.html" style="height:320px"></iframe></section><section class="comp" id="ManualCarga"><h3>Manual: cómo se carga un resultado</h3><div class="comp-doc"><p>Página de ejemplo en formato manual de instrucciones: explica cómo se carga un resultado con una ilustración de línea y tres pasos numerados. La ilustración es una jugadora mirando el celular, con un zoom a la pantalla donde aparece el aviso para confirmar el resultado.</p>
+<ul>
+<li>Úsala como modelo para explicar cualquier flujo de la liga (anotarse, cargar, confirmar, leer la tabla).</li>
+<li>Estructura: fondo <code>lp-dots</code>, encabezado <code>lp-play-head</code> con el número de jugada en <code>lp-play</code> y el título en mayúsculas, una ilustración de línea y pasos con <code>lp-step</code>.</li>
+<li>El zoom va con un círculo punteado sobre el objeto y dos líneas punteadas hasta la ampliación. La pantalla ampliada usa los componentes reales (<code>lp-status</code>, <code>lp-btn</code>) dentro de un <code>foreignObject</code>.</li>
+<li>La cancha anotada que estaba antes quedó en la ficha IlustracionCancha.</li>
+<li>Ilustraciones: líneas finas en <code>brand</code>, rellenos planos del mismo <code>brand</code>, la pelota en <code>accent</code>, trayectorias punteadas con flecha y anotaciones en mayúsculas con línea guía (<code>lp-annot</code> en HTML, o una línea y un texto en SVG).</li>
+<li>El texto imita el tono del manual ("procure cargar…") solo en el encabezado de la jugada. Los pasos vuelven al tono de siempre, de vos.</li>
+<li>Nunca uses logos de marcas ni de clubes en las ilustraciones.</li>
+</ul></div><iframe title="Manual: cómo se carga un resultado" data-src="componentes/ManualCarga.html" src="componentes/ManualCarga.html" style="height:1010px"></iframe></section><section class="comp" id="IlustracionCancha"><h3>Ilustración: cancha anotada</h3><div class="comp-doc"><p>Ilustración de la cancha en perspectiva con anotaciones técnicas: paredes de vidrio, red de 0,88 m, línea de saque, trayectoria punteada, paleta y pelota.</p>
+<ul>
+<li>Estaba en la ficha del manual y quedó guardada acá para usarla más adelante (por ejemplo, en la portada de la landing o en una página del reglamento).</li>
+<li>Líneas en <code>brand</code>, rellenos planos del mismo <code>brand</code> (la pared del fondo al 12%), pelota en <code>accent</code> y anotaciones en <code>label</code> con línea guía.</li>
+</ul></div><iframe title="Ilustración: cancha anotada" data-src="componentes/IlustracionCancha.html" src="componentes/IlustracionCancha.html" style="height:440px"></iframe></section><section class="comp" id="Button"><h3>Botón</h3><div class="comp-doc"><p>Botón con forma de píldora para las acciones de la liga: anotarse, cargar, confirmar y avisar.</p>
+<ul>
+<li><code>lp-btn lp-btn--cta</code> (verde loro, texto <code>on-accent</code>): un solo llamado a la acción por pantalla, en la landing "Anotarme en la liga".</li>
+<li><code>lp-btn lp-btn--primary</code> (azul de cancha): la acción principal de una pantalla o tarjeta.</li>
+<li><code>lp-btn lp-btn--secondary</code>: la acción alternativa ("Rechazar", "Avisar por WhatsApp").</li>
+<li><code>lp-btn--block</code>: ocupa todo el ancho; úsalo para el envío del formulario en celular.</li>
+<li>Mientras envía: <code>disabled</code> y el texto cambia a "Enviando…".</li>
+</ul>
+<p>El texto dice lo que pasa, en infinitivo o primera persona del plural: "Cargar resultado", "Anotarnos". Usá <code>&lt;button&gt;</code> para acciones y <code>&lt;a class="lp-btn"&gt;</code> para links.</p></div><iframe title="Botón" data-src="componentes/Button.html" src="componentes/Button.html" style="height:96px"></iframe></section><section class="comp" id="Field"><h3>Campo</h3><div class="comp-doc"><p>Campo de formulario con etiqueta visible, para la inscripción y la carga de resultados.</p>
+<ul>
+<li>Estructura: <code>&lt;label class="lp-field"&gt;</code> con <code>lp-field__label</code>, el control (<code>lp-input</code> o <code>lp-select</code>) y opcionalmente <code>lp-field__help</code> o <code>lp-field__error</code>.</li>
+<li>La etiqueta siempre está visible; el placeholder solo muestra un ejemplo de formato ("221 555 1234").</li>
+<li>Error: agregá <code>lp-field--error</code> y un <code>lp-field__error</code> que diga qué arreglar.</li>
+<li>En celular usá <code>inputmode="tel"</code> para WhatsApp y <code>type="email"</code> para email.</li>
+</ul></div><iframe title="Campo" data-src="componentes/Field.html" src="componentes/Field.html" style="height:300px"></iframe></section><section class="comp" id="Checkbox"><h3>Casilla</h3><div class="comp-doc"><p>Casilla con su texto al lado, para el consentimiento de datos de la inscripción.</p>
+<ul>
+<li><code>&lt;label class="lp-check"&gt;</code> con el <code>&lt;input type="checkbox"&gt;</code> y un <code>&lt;span&gt;</code> con el texto.</li>
+<li>El consentimiento es obligatorio: dice para qué se usa el WhatsApp y que no se publican teléfonos ni emails.</li>
+</ul></div><iframe title="Casilla" data-src="componentes/Checkbox.html" src="componentes/Checkbox.html" style="height:96px"></iframe></section><section class="comp" id="MatchStatus"><h3>Estado del partido</h3><div class="comp-doc"><p>Etiqueta del estado de un partido: agendado, en juego, cargado, confirmado, en disputa o cancelado.</p>
+<ul>
+<li>Clases: <code>lp-status--scheduled</code>, <code>lp-status--playing</code>, <code>lp-status--loaded</code>, <code>lp-status--confirmed</code>, <code>lp-status--dispute</code>, <code>lp-status--cancelled</code>. El glifo lo pone el CSS.</li>
+<li><code>playing</code> (En juego) muestra la hora agendada dentro de <code>lp-status__time</code>: <code>En juego · &lt;span class="lp-status__time"&gt;22:00&lt;/span&gt;</code>.</li>
+<li>Siempre con la palabra escrita; el color solo refuerza.</li>
+<li>Suman en la tabla los partidos <code>confirmed</code> y los <code>cancelled</code>. <code>dispute</code> significa que decide el organizador. <code>cancelled</code> es cuando una pareja no se presentó a jugar: la que se presentó suma los puntos del partido.</li>
+</ul></div><iframe title="Estado del partido" data-src="componentes/MatchStatus.html" src="componentes/MatchStatus.html" style="height:112px"></iframe></section><section class="comp" id="MatchCard"><h3>Tarjeta de partido</h3><div class="comp-doc"><p>Tarjeta de un partido de la liga con fecha, cancha, parejas, resultado por set y estado.</p>
+<ul>
+<li>Estructura: <code>lp-match</code> con <code>lp-match__meta</code> (fecha · cancha · hora y un <code>lp-status</code>), <code>lp-match__teams</code> (cada pareja con su <code>lp-match__score</code>, sets separados por espacio) y, si hay algo que hacer, <code>lp-match__actions</code>.</li>
+<li>La pareja ganadora lleva <code>lp-match__team--winner</code>.</li>
+<li>Acciones según el estado y quién mira: Agendado o En juego → "Cargar resultado"; Cargado, para la rival → "Confirmar" y "Rechazar"; Cargado, para quien cargó → "Avisar por WhatsApp"; En disputa → sin acciones, con el aviso "Decide el organizador".</li>
+<li>Nunca muestres teléfonos en la tarjeta.</li>
+</ul></div><iframe title="Tarjeta de partido" data-src="componentes/MatchCard.html" src="componentes/MatchCard.html" style="height:520px"></iframe></section><section class="comp" id="StandingsTable"><h3>Tabla de posiciones</h3><div class="comp-doc"><p>Tabla de posiciones de la liga, calculada solo con partidos confirmados.</p>
+<ul>
+<li>Columnas en este orden: posición, pareja, PJ, Pts, GF, GC, Dif. Es el mismo orden que hoy usan los organizadores en su planilla.</li>
+<li>La pareja de quien mira lleva <code>is-mine</code> (fondo <code>brand-tint</code>); el puntero, <code>is-leader</code>.</li>
+<li>Diferencia positiva con <code>lp-pos</code>, negativa con <code>lp-neg</code> y el signo escrito (+24, −25).</li>
+<li>Envolvé la tabla en <code>lp-table-wrap</code>: en celulares chicos se desplaza de costado sin romper la página.</li>
+<li>Debajo, siempre la aclaración "Solo suman los partidos confirmados por las dos parejas."</li>
+</ul></div><iframe title="Tabla de posiciones" data-src="componentes/StandingsTable.html" src="componentes/StandingsTable.html" style="height:420px"></iframe></section><section class="comp" id="Notice"><h3>Aviso</h3><div class="comp-doc"><p>Aviso breve después de una acción: éxito, error o información.</p>
+<ul>
+<li><code>lp-notice--success</code> después de anotarse o confirmar; <code>lp-notice--error</code> si algo falló, diciendo qué hacer; <code>lp-notice--info</code> para aclaraciones ("Fecha libre: esta semana no juegan").</li>
+<li>Título corto en <code>lp-notice__title</code> y una línea de detalle.</li>
+</ul></div><iframe title="Aviso" data-src="componentes/Notice.html" src="componentes/Notice.html" style="height:200px"></iframe></section></section>
+</main>
+<footer class="wrap">Liga Pareja · La Plata</footer>
+<script>
+(function () {
+  var root = document.documentElement, btn = document.getElementById('tema');
+  function current() { return root.getAttribute('data-theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); }
+  function apply(theme) {
+    root.setAttribute('data-theme', theme);
+    btn.textContent = theme === 'dark' ? 'Tema claro' : 'Tema oscuro';
+    document.querySelectorAll('iframe[data-src]').forEach(function (f) { f.src = f.getAttribute('data-src') + '?theme=' + theme; });
+  }
+  function fit(f) { try { var d = f.contentDocument; if (d && d.body) f.style.height = Math.max(d.documentElement.scrollHeight, d.body.scrollHeight) + 'px'; } catch (e) {} }
+  document.querySelectorAll('iframe[data-src]').forEach(function (f) { f.addEventListener('load', function () { fit(f); setTimeout(function () { fit(f); }, 600); }); fit(f); });
+  btn.textContent = current() === 'dark' ? 'Tema claro' : 'Tema oscuro';
+  btn.addEventListener('click', function () { apply(current() === 'dark' ? 'light' : 'dark'); });
+})();
+</script>
+</body>
+</html>
