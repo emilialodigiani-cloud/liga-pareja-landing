@@ -2,13 +2,6 @@
 // Si queda vacía, el formulario funciona en modo prueba y no guarda nada.
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxI-JFybKHqyVILm9Rqpf7LtdlK2Qqs3k7HvA9QEvq6SVJP8IHocEz1IQzs9KJJxNc9Cw/exec';
 
-// WhatsApp de quien recibe a los organizadores, con código de país y sin espacios (ej. 5492215551234).
-const WHATSAPP_ORGANIZADOR = '5492215678025';
-if (WHATSAPP_ORGANIZADOR) {
-  document.getElementById('registrar-liga').href =
-    'https://wa.me/' + WHATSAPP_ORGANIZADOR + '?text=' + encodeURIComponent('Hola, quiero registrar mi liga en Liga Pareja');
-}
-
 const form = document.getElementById('form');
 const errorBox = document.getElementById('error');
 const errorTitle = document.getElementById('error-title');
