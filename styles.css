@@ -256,3 +256,23 @@ h2, h3, p { margin: 0; }
 .modal { position: absolute; left: 0; right: 0; bottom: 0; background: var(--surface-raised); border-radius: var(--radius-md) var(--radius-md) 0 0; padding: var(--space-3) var(--space-4) var(--space-6); display: grid; gap: var(--space-3); }
 .grab { justify-self: center; width: 40px; height: 4px; border-radius: var(--radius-pill); background: var(--line-strong); }
 .modal h2 { margin: 0; font: 700 28px/32px var(--font-display); letter-spacing: .02em; text-transform: uppercase; color: var(--brand); }
+
+/* Página de organizadores */
+.hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; }
+.hero__link { color: var(--on-band); font-weight: 600; }
+.compare { display: grid; background: var(--surface-raised); border: 1px solid var(--line); border-radius: var(--radius-md); }
+.compare__row { display: grid; gap: var(--space-1); padding: var(--space-4); border-bottom: 1px solid var(--line); }
+.compare__row:last-child { border-bottom: 0; }
+.compare__row strong { font: 600 14px/24px var(--font-text); letter-spacing: .06em; text-transform: uppercase; color: var(--brand); }
+.compare__row span { font-size: 15px; line-height: 22px; }
+.compare__row span:nth-of-type(1) { color: var(--ink-muted); }
+.compare__row span:nth-of-type(1)::before { content: "Hoy: "; font-weight: 600; }
+.compare__row span:nth-of-type(2)::before { content: "Con Liga Pareja: "; font-weight: 600; color: var(--brand); }
+.compare__head { display: none; }
+@media (min-width: 760px) {
+  .compare__row { grid-template-columns: 160px 1fr 1fr; gap: var(--space-6); }
+  .compare__head { display: grid; font: 600 12px/16px var(--font-text); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-muted); padding-block: var(--space-3); }
+  .compare__row span:nth-of-type(n)::before { content: none; }
+}
+.board { max-width: 640px; }
+.footer a { color: inherit; }
