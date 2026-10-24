@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Liga Pareja · Tu liga</title>
+  <meta name="description" content="Tus partidos, la tabla y el fixture de la liga. Cargás el resultado y la pareja rival lo confirma.">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#234cf0">
+  <meta name="color-scheme" content="light dark">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;600&display=swap">
+  <link rel="stylesheet" href="/design-system/tokens.css">
+  <link rel="stylesheet" href="/design-system/bundle.css">
+  <link rel="stylesheet" href="liga.css">
+</head>
+<body>
+  <header class="lp-band head">
+    <div class="head__in">
+      <p class="head__brand">Liga Pareja</p>
+      <h1 class="head__title" id="titulo">Tu liga</h1>
+      <p class="head__who" id="quien" hidden></p>
+    </div>
+    <nav class="tabs" id="tabs" aria-label="Secciones" hidden>
+      <a class="tabs__tab" href="#partidos" id="tab-partidos">Mis partidos</a>
+      <a class="tabs__tab" href="#tabla">Tabla</a>
+      <a class="tabs__tab" href="#fixture">Fixture</a>
+    </nav>
+  </header>
+
+  <main class="main lp-dots" id="main" aria-live="polite">
+    <p class="estado" id="cargando">Cargando la liga…</p>
+    <div class="lp-notice lp-notice--error" id="error" hidden>
+      <span class="lp-notice__title" id="error-title">No pudimos abrir la liga</span>
+      <span id="error-text">Probá de nuevo en un rato.</span>
+    </div>
+
+    <section class="vista" id="partidos" hidden></section>
+    <section class="vista" id="tabla" hidden></section>
+    <section class="vista" id="fixture" hidden></section>
+  </main>
+
+  <footer class="pie" id="pie" hidden>
+    <p id="pie-yo"></p>
+  </footer>
+
+  <dialog class="hoja" id="cargar" aria-labelledby="cargar-titulo">
+    <form method="dialog" class="hoja__in" id="cargar-form" novalidate>
+      <h2 id="cargar-titulo">Cargar resultado</h2>
+      <p class="lp-field__help" id="cargar-meta"></p>
+      <table class="sets">
+        <thead><tr><th></th><th scope="col" id="col-nos">Nosotros</th><th scope="col" id="col-ellos">Ellos</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Set 1</th><td><input class="lp-input" name="n1" inputmode="numeric" maxlength="2" aria-label="Set 1, games de ustedes"></td><td><input class="lp-input" name="e1" inputmode="numeric" maxlength="2" aria-label="Set 1, games de la rival"></td></tr>
+          <tr><th scope="row">Set 2</th><td><input class="lp-input" name="n2" inputmode="numeric" maxlength="2" aria-label="Set 2, games de ustedes"></td><td><input class="lp-input" name="e2" inputmode="numeric" maxlength="2" aria-label="Set 2, games de la rival"></td></tr>
+          <tr><th scope="row">Set 3</th><td><input class="lp-input" name="n3" inputmode="numeric" maxlength="2" aria-label="Set 3, games de ustedes"></td><td><input class="lp-input" name="e3" inputmode="numeric" maxlength="2" aria-label="Set 3, games de la rival"></td></tr>
+        </tbody>
+      </table>
+      <p class="lp-field__help">El set 3 solo si hubo. Si fue súper tie-break, poné los puntos (por ejemplo, 10 a 7).</p>
+      <p class="lp-field__error" id="cargar-error" hidden></p>
+      <div class="hoja__acciones">
+        <button class="lp-btn lp-btn--primary" type="submit" value="ok">Cargar resultado</button>
+        <button class="lp-btn lp-btn--secondary" type="button" data-cerrar>Cancelar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="hoja" id="rechazar" aria-labelledby="rechazar-titulo">
+    <form method="dialog" class="hoja__in" id="rechazar-form">
+      <h2 id="rechazar-titulo">Rechazar resultado</h2>
+      <p class="lp-field__help">El organizador va a ver tu mensaje y decide cómo queda el partido.</p>
+      <label class="lp-field"><span class="lp-field__label">¿Qué pasó? (opcional)</span>
+        <textarea class="lp-input" name="motivo" rows="3" maxlength="200" placeholder="Por ejemplo: el segundo set fue 4-6."></textarea></label>
+      <p class="lp-field__error" id="rechazar-error" hidden></p>
+      <div class="hoja__acciones">
+        <button class="lp-btn lp-btn--primary" type="submit" value="ok">Rechazar resultado</button>
+        <button class="lp-btn lp-btn--secondary" type="button" data-cerrar>Cancelar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="liga.js"></script>
+</body>
+</html>
