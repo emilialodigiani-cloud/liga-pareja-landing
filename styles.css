@@ -208,6 +208,10 @@ h2, h3, p { margin: 0; }
 /* Cómo funciona */
 .how { display: grid; gap: var(--space-6); align-items: center; }
 @media (min-width: 860px) { .how { grid-template-columns: 1fr auto; } }
+.section--como { gap: var(--space-4); }
+.section--como .how { align-items: start; }
+.lp-play-head--solo { align-items: center; }
+.lp-play-head--solo h3 { margin: 0; }
 .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-6); }
 .steps li { display: grid; grid-template-columns: 32px 1fr; gap: var(--space-2) var(--space-4); align-items: start; }
 .steps strong { font: 600 14px/32px var(--font-text); letter-spacing: .06em; text-transform: uppercase; color: var(--brand); }
