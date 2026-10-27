@@ -25,7 +25,7 @@ La planilla es el back office. El script crea solas las hojas Ligas, Parejas, Ju
 - **Armar siguiente ronda del playoff:** cuartos (1º-8º, 4º-5º, 2º-7º, 3º-6º), semifinal y final.
 - **Generar links nuevos:** para un jugador cuyo link se filtró, se borra su `codigo` y este menú le genera otro.
 
-Si el organizador resuelve una disputa o una ausencia, edita el partido en la hoja Partidos (`estado` en `confirmado` con los `sets` correctos, o `cancelado` con la pareja que se presentó en `se_presento`) y la tabla se recalcula sola. Los puntos por partido ganado y perdido se configuran en la hoja Ligas.
+Si el organizador resuelve una disputa o una ausencia, edita el partido en la hoja Partidos (`estado` en `confirmado` con los `sets` correctos, o `cancelado` con la pareja que se presentó en `se_presento`) y la tabla se recalcula sola. Puntos: ganar en 2 sets da 3 al ganador y 0 al perdedor; ganar en 3 sets da 2 al ganador y 1 al perdedor. Si una pareja no se presenta, la que se presentó suma 3. Se cambian en `PUNTOS`, al principio de la sección Tabla de `Code.gs`.
 
 Después de cambiar `Code.gs`: Implementar → Administrar implementaciones → editar → Versión nueva. Así la URL no cambia.
 

@@ -7,7 +7,7 @@ const URL_APP = 'https://liga-pareja-landing.vercel.app/liga/';
 // Columnas de cada hoja. Si una hoja no existe, se crea con estos encabezados.
 const HOJAS = {
   Ligas: ['id', 'nombre', 'categoria', 'dia', 'hora', 'canchas', 'primera_fecha', 'fecha_libre',
-    'puntos_ganado', 'puntos_perdido', 'estado'],
+    'estado'],
   Inscripciones: ['fecha', 'liga', 'jugador1', 'whatsapp1', 'jugador2', 'whatsapp2', 'email',
     'categoria_declarada', 'partidos_desparejos_mes', 'fuente', 'consentimiento', 'estado'],
   Parejas: ['id', 'liga', 'nombre', 'jugador1', 'jugador2'],
@@ -205,10 +205,12 @@ function ganador(partido) {
 
 // ---------- Tabla ----------
 
-// Suman los partidos confirmados y los cancelados (la pareja que se presentó suma los puntos del ganador).
+// Puntos: ganar en 2 sets da 3 al ganador y 0 al perdedor; en 3 sets, 2 al ganador y 1 al perdedor.
+// Si una pareja no se presenta, la que se presentó suma 3, como si hubiera ganado en 2 sets.
+const PUNTOS = { dosSets: [3, 0], tresSets: [2, 1] };
+
+// Suman los partidos confirmados y los cancelados.
 function calcularTabla(liga, parejas, partidos) {
-  const ptsGanado = numero(liga.puntos_ganado, 2);
-  const ptsPerdido = numero(liga.puntos_perdido, 1);
   const filas = {};
   parejas.forEach(x => { filas[x.id] = { pareja: x.id, nombre: x.nombre, pj: 0, pg: 0, pp: 0, puntos: 0, gf: 0, gc: 0 }; });
 
@@ -217,12 +219,14 @@ function calcularTabla(liga, parejas, partidos) {
     if (!a || !b) return;
     const gana = ganador(x);
     if (!gana) return;
-    const [ga, gb] = x.estado === CONFIRMADO ? contarGames(leerSets(x.sets)) : [0, 0];
+    const sets = x.estado === CONFIRMADO ? leerSets(x.sets) : [];
+    const [ga, gb] = contarGames(sets);
+    const [ptsGanador, ptsPerdedor] = sets.length === 3 ? PUNTOS.tresSets : PUNTOS.dosSets;
     [[a, ga, gb], [b, gb, ga]].forEach(([fila, favor, contra]) => {
       const gano = fila.pareja === gana;
       fila.pj++; fila.gf += favor; fila.gc += contra;
-      if (gano) { fila.pg++; fila.puntos += ptsGanado; }
-      else { fila.pp++; fila.puntos += x.estado === CANCELADO ? 0 : ptsPerdido; }
+      if (gano) { fila.pg++; fila.puntos += ptsGanador; }
+      else { fila.pp++; fila.puntos += ptsPerdedor; }
     });
   });
 
@@ -383,7 +387,7 @@ function crearLigaDePrueba() {
   const primera = new Date(martes.getFullYear(), martes.getMonth(), martes.getDate() - 14);
   agregar('Ligas', { id: ID, nombre: 'Liga de prueba · Martes sexta', categoria: 6, dia: 'martes', hora: texto('22:00'),
     canchas: 'Cancha 2, Cancha 3, Cancha 4, Cancha 5', primera_fecha: primera, fecha_libre: 8,
-    puntos_ganado: 2, puntos_perdido: 1, estado: 'activa' });
+    estado: 'activa' });
 
   const nombres = [['Lucía Ruiz', 'Paula Ferrari'], ['Martín Sosa', 'Diego Medina'], ['Sofía Luna', 'Carla Vera'],
     ['Juan Paz', 'Tomás Correa'], ['Nico Díaz', 'Ariel Ortiz'], ['Fede Gómez', 'Leo Ibarra'],
@@ -541,10 +545,6 @@ function textoDia(valor) {
 
 function textoHora(valor) {
   return valor instanceof Date ? Utilities.formatDate(valor, zona(), 'HH:mm') : String(valor || '');
-}
-
-function numero(valor, siFalta) {
-  return valor === '' || valor === undefined || valor === null ? siFalta : Number(valor);
 }
 
 function nombreDePila(nombre) {

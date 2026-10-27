@@ -242,7 +242,7 @@ function verTabla() {
       <thead><tr><th>#</th><th>Pareja</th><th><abbr title="Partidos jugados">PJ</abbr></th><th>Pts</th><th><abbr title="Games a favor">GF</abbr></th><th><abbr title="Games en contra">GC</abbr></th><th>Dif</th></tr></thead>
       <tbody>${filas}</tbody>
     </table></div>
-    ${ayuda('Solo suman los partidos confirmados por las dos parejas. Si una pareja no se presenta, la otra suma los puntos.')}
+    ${ayuda('Ganar en 2 sets da 3 puntos; en 3 sets, 2 al ganador y 1 al que pierde. Si una pareja no se presenta, la otra suma 3. Solo cuentan los partidos confirmados por las dos parejas.')}
   </div>`;
 }
 
